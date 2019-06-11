@@ -2,21 +2,25 @@
   "name": "ts-json-rpc-client",
   "version": "1.0.0",
   "description": "",
-  "main": "rpc-client.ts",
+  "main": "src/rpc-client.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ts-node-dev --respawn src/rpc-client.test.ts"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "ts-json-rpc-server": "1.0.0"
+    "invariant": "^2.2.4",
+    "ts-json-rpc-server": "file:../ts-json-rpc-server"
   },
   "devDependencies": {
     "@types/express": "^4.17.0",
     "@types/invariant": "^2.2.29",
-    "@types/jest": "^24.0.13",
-    "invariant": "^2.2.4",
-    "jest": "^24.8.0",
+    "@types/node-fetch": "^2.3.5",
+    "@types/tape-async": "^2.3.0",
+    "node-fetch": "^2.6.0",
+    "tape-async": "^2.3.0",
+    "ts-node": "^8.2.0",
+    "ts-node-dev": "^1.0.0-pre.39",
     "typescript": "^3.5.1"
   }
 }

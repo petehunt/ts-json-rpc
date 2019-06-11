@@ -3,9 +3,7 @@ import { RpcMethods } from "ts-json-rpc-server";
 import { Request } from "express";
 
 export type RpcClient<T extends RpcMethods> = {
-  [K in keyof T]: T[K] extends () => Promise<
-    (req: Request, ...args: infer A) => infer R
-  >
+  [K in keyof T]: T[K] extends (req: Request, ...args: infer A) => infer R
     ? (R extends Promise<infer I>
         ? (...args: A) => R
         : (...args: A) => Promise<R>)
