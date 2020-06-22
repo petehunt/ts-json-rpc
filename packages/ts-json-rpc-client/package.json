@@ -1,16 +1,21 @@
 {
   "name": "ts-json-rpc-client",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
-  "main": "src/rpc-client.ts",
+  "main": "dist/rpc-client.js",
+  "types": "dist/rpc-client.d.ts",
   "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
     "test": "ts-node-dev --respawn src/rpc-client.test.ts"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "invariant": "^2.2.4",
-    "ts-json-rpc-server": "file:../ts-json-rpc-server"
+    "invariant": "^2.2.4"
+  },
+  "peerDependencies": {
+    "ts-json-rpc-server": "^0.1.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.0",
@@ -19,6 +24,7 @@
     "@types/tape-async": "^2.3.0",
     "node-fetch": "^2.6.0",
     "tape-async": "^2.3.0",
+    "ts-json-rpc-server": "^0.1.0",
     "ts-node": "^8.2.0",
     "ts-node-dev": "^1.0.0-pre.39",
     "typescript": "^3.5.1"

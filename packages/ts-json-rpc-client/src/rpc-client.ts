@@ -4,10 +4,10 @@ import { Request } from "express";
 
 export type RpcClient<T extends RpcMethods> = {
   [K in keyof T]: T[K] extends (req: Request, ...args: infer A) => infer R
-    ? (R extends Promise<infer I>
-        ? (...args: A) => R
-        : (...args: A) => Promise<R>)
-    : never
+    ? R extends Promise<infer I>
+      ? (...args: A) => R
+      : (...args: A) => Promise<R>
+    : never;
 };
 
 // TODO: support batch requests in both the client and the server
@@ -27,14 +27,14 @@ export default function createRpcClient<T extends RpcMethods>(
           const response = await fetch(jsonRpcUrl, {
             method: "post",
             headers: {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
             },
             body: JSON.stringify({
               jsonrpc: "2.0",
               method,
               params,
-              id
-            })
+              id,
+            }),
           });
           const responseJson = await response.json();
           invariant(responseJson.jsonrpc === "2.0", "invalid jsonrpc version");
@@ -44,7 +44,7 @@ export default function createRpcClient<T extends RpcMethods>(
           }
           return responseJson.result;
         };
-      }
+      },
     }
   ) as RpcClient<T>;
 }
