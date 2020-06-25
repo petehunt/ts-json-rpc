@@ -17,6 +17,11 @@ export function createRpcHandler(
     invariant(!Array.isArray(req.body), "batch is not supported. sorry!");
     invariant(req.body.jsonrpc === "2.0", "jsonrpc version was not 2.0");
     invariant(
+      !req.body.method.startsWith("_"),
+      "cannot call methods prefixed with _: %s",
+      req.body.method
+    );
+    invariant(
       methods[req.body.method].call,
       "method does not exist: %s",
       req.body.method
@@ -31,7 +36,7 @@ export function createRpcHandler(
       JSON.stringify({
         jsonrpc: "2.0",
         id: req.body.id,
-        result
+        result,
       })
     );
   }
@@ -42,7 +47,7 @@ export function createRpcHandler(
           jsonrpc: "2.0",
           id: req.body.id,
           code: -32001,
-          message: e.toString()
+          message: e.toString(),
         })
       );
     }
@@ -55,7 +60,7 @@ export function createRpcHandler(
         "req.body was not an object. is json parsing enabled?"
       );
 
-      handleRequest(req, res).catch(e => sendError(e));
+      handleRequest(req, res).catch((e) => sendError(e));
     } catch (e) {
       sendError(e);
     }
@@ -70,7 +75,7 @@ export function runDefaultServer(
   const app = express();
   app.use(express.json());
   app.post(path, createRpcHandler(methods));
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     const server = app.listen(port, () => resolve(server));
   });
 }
