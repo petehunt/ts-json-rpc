@@ -22,6 +22,10 @@ export default function createRpcClient<T extends RpcMethods>(
     {},
     {
       get(_, method: string) {
+        if (method === "then") {
+          return undefined;
+        }
+
         return async (...params: any[]) => {
           const id = (idSeed++).toString();
           const response = await fetch(jsonRpcUrl, {

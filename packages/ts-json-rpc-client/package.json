@@ -1,6 +1,6 @@
 {
   "name": "ts-json-rpc-client",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "main": "dist/rpc-client.js",
   "types": "dist/rpc-client.d.ts",
